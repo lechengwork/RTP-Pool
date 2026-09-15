@@ -5,7 +5,15 @@ CREATE ROLE IF NOT EXISTS rtp_basic_pool_aggregator_role
 ON CLUSTER sg_cluster;
 
 GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_raw_event_deduplicated
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
 SELECT ON icrown.rtp_basic_pool_raw_event
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_raw_event_local
 TO rtp_basic_pool_aggregator_role;
 
 GRANT ON CLUSTER sg_cluster
@@ -13,7 +21,23 @@ SELECT ON icrown.rtp_basic_pool_global_config_latest
 TO rtp_basic_pool_aggregator_role;
 
 GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_global_config
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_global_config_local
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
 SELECT ON icrown.rtp_basic_pool_state_latest
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_state
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_state_local
 TO rtp_basic_pool_aggregator_role;
 
 GRANT ON CLUSTER sg_cluster
@@ -21,7 +45,15 @@ INSERT ON icrown.rtp_basic_pool_state
 TO rtp_basic_pool_aggregator_role;
 
 GRANT ON CLUSTER sg_cluster
+INSERT ON icrown.rtp_basic_pool_state_local
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
 INSERT ON icrown.rtp_basic_pool_stats
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
+INSERT ON icrown.rtp_basic_pool_stats_local
 TO rtp_basic_pool_aggregator_role;
 
 GRANT ON CLUSTER sg_cluster
@@ -29,11 +61,27 @@ INSERT ON icrown.rtp_basic_pool_telemetry
 TO rtp_basic_pool_aggregator_role;
 
 GRANT ON CLUSTER sg_cluster
+INSERT ON icrown.rtp_basic_pool_telemetry_local
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
 SELECT ON icrown.rtp_basic_pool_aggregation_checkpoint_latest
 TO rtp_basic_pool_aggregator_role;
 
 GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_aggregation_checkpoint
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_aggregation_checkpoint_local
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
 INSERT ON icrown.rtp_basic_pool_aggregation_checkpoint
+TO rtp_basic_pool_aggregator_role;
+
+GRANT ON CLUSTER sg_cluster
+INSERT ON icrown.rtp_basic_pool_aggregation_checkpoint_local
 TO rtp_basic_pool_aggregator_role;
 
 GRANT ON CLUSTER sg_cluster
@@ -48,7 +96,19 @@ SELECT ON icrown.rtp_basic_pool_global_config_latest
 TO rtp_basic_pool_control_role;
 
 GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_global_config
+TO rtp_basic_pool_control_role;
+
+GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_global_config_local
+TO rtp_basic_pool_control_role;
+
+GRANT ON CLUSTER sg_cluster
 INSERT ON icrown.rtp_basic_pool_global_config
+TO rtp_basic_pool_control_role;
+
+GRANT ON CLUSTER sg_cluster
+INSERT ON icrown.rtp_basic_pool_global_config_local
 TO rtp_basic_pool_control_role;
 
 GRANT ON CLUSTER sg_cluster
@@ -56,7 +116,19 @@ SELECT ON icrown.rtp_basic_pool_state_latest
 TO rtp_basic_pool_control_role;
 
 GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_state
+TO rtp_basic_pool_control_role;
+
+GRANT ON CLUSTER sg_cluster
+SELECT ON icrown.rtp_basic_pool_state_local
+TO rtp_basic_pool_control_role;
+
+GRANT ON CLUSTER sg_cluster
 INSERT ON icrown.rtp_basic_pool_state
+TO rtp_basic_pool_control_role;
+
+GRANT ON CLUSTER sg_cluster
+INSERT ON icrown.rtp_basic_pool_state_local
 TO rtp_basic_pool_control_role;
 
 GRANT ON CLUSTER sg_cluster
