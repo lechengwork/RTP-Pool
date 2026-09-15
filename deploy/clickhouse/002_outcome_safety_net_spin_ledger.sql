@@ -16,7 +16,7 @@ ON CLUSTER sg_cluster
     bet Decimal(38, 12) COMMENT '本轉最終押注',
     win Decimal(38, 12) COMMENT '本轉最終贏分；候選中未回傳的結果不得寫入',
 
-    accounting_bucket LowCardinality(String) COMMENT 'NORMAL／SAFETY_NET／CUSTOMER_DEMAND／DEBT_REPAYMENT；只有 NORMAL 與 SAFETY_NET 納入安全網 B、D、spin_count',
+    accounting_bucket LowCardinality(String) COMMENT 'NORMAL／SAFETY_NET／CUSTOMER_DEMAND／DEBT_REPAYMENT；只有 NORMAL 與 SAFETY_NET 納入安全網 AGG_DecayedBetSum、AGG_DecayedRtpDiff、AG_SpinCount',
     recorded_at DateTime64(6, 'Etc/GMT+4') COMMENT '帳本首次或重送寫入時間',
     updated_at DateTime64(6, 'Etc/GMT+4') COMMENT '帳本版本時間；ReplacingMergeTree 以此選擇最新版本'
 )

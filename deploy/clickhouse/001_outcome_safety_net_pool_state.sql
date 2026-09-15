@@ -14,9 +14,9 @@ ON CLUSTER sg_cluster
     GM_GameCode LowCardinality(String) COMMENT '遊戲代碼；安全網池 key 的第二維',
     GameServer_Version LowCardinality(String) COMMENT 'RTP 版本字串；保留前導零，例如 0970；安全網池 key 的第三維',
 
-    B Decimal(38, 12) COMMENT '衰減後累積押注：B ← λ × B + bet',
-    D Decimal(38, 12) COMMENT '衰減後 RTP 差額：D ← λ × D + (bet × r − win)',
-    spin_count UInt64 COMMENT '累積納入安全網的轉數；暖身判斷使用，不計客戶需求或記債池還款轉',
+    AGG_DecayedBetSum Decimal(38, 12) COMMENT '衰減後累積押注：AGG_DecayedBetSum ← λ × AGG_DecayedBetSum + bet',
+    AGG_DecayedRtpDiff Decimal(38, 12) COMMENT '衰減後 RTP 差額：AGG_DecayedRtpDiff ← λ × AGG_DecayedRtpDiff + (bet × r − win)',
+    AG_SpinCount UInt64 COMMENT '累積納入安全網的轉數；暖身判斷使用，不計客戶需求或記債池還款轉',
     last_seen DateTime64(6, 'Etc/GMT+4') COMMENT '最後一筆納入安全網的 spin 時間；TTL 以此欄位計算',
 
     epsilon_override Nullable(Decimal(9, 6)) COMMENT '個別池的粗偏移門檻覆寫；NULL 時使用全域 ε，例如 0.100000 = 10%',
@@ -29,7 +29,7 @@ ENGINE = ReplicatedReplacingMergeTree(
 )
 PARTITION BY toYYYYMM(last_seen)
 ORDER BY (AGT_Agent1, GM_GameCode, GameServer_Version)
-TTL last_seen + INTERVAL 60 DAY DELETE;
+TTL last_seen + INTERVAL 30 DAY DELETE;
 
 -- 同一個池一律落到同一 shard，才能讓 FINAL 與 ReplacingMergeTree 正確收斂到一列。
 CREATE TABLE IF NOT EXISTS icrown.outcome_safety_net_pool_state
