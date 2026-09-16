@@ -1,16 +1,16 @@
--- RTP基本池狀態。數學狀態為 Dl、Bl、W、override_mode；last_seen 只服務 30 天 TTL。
+-- RTP基本池 MVP 狀態。每池一個最新 snapshot；Phase 1 不做 steering。
 
 CREATE TABLE IF NOT EXISTS icrown.rtp_basic_pool_state_local
 ON CLUSTER sg_cluster
 (
     AGT_Agent1 String COMMENT '總代 ID',
     GM_GameCode LowCardinality(String) COMMENT '老虎機 ID',
-    GameServer_Version LowCardinality(String) COMMENT 'RTP 版本 ID；保留前導零，例如 0970',
+    GameServer_Version LowCardinality(String) COMMENT 'RTP 版本 ID',
     Dl Float64 DEFAULT 0.0 COMMENT 'Dl ← λ × Dl + (r × bet − win)',
     Bl Float64 DEFAULT 0.0 COMMENT 'Bl ← λ × Bl + bet',
     W Float64 DEFAULT 0.0 COMMENT 'W ← λ × W + 1',
     override_mode Enum8('AUTO' = 1, 'FORCE_ON' = 2, 'FORCE_OFF' = 3) DEFAULT 'AUTO' COMMENT '每池控制覆寫',
-    last_seen DateTime64(6, 'Etc/GMT+4') COMMENT '最後一筆 spin 時間；TTL 依據',
+    last_seen DateTime64(6, 'Etc/GMT+4') COMMENT '最後處理時間；30 天 TTL 依據',
     updated_at DateTime64(6, 'Etc/GMT+4') COMMENT '狀態版本時間'
 )
 ENGINE = ReplicatedReplacingMergeTree(

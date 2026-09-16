@@ -1,4 +1,4 @@
--- 破壞性操作：只有 01_preflight 顯示舊表全為 0，且 09_postflight 全部通過後才能執行。
+-- 最後一步；執行前須由 01_preflight 確認三張舊 local 表仍為 0 筆，且 04_verify 已通過。
 
 DROP TABLE IF EXISTS icrown.outcome_safety_net_spin_ledger
 ON CLUSTER sg_cluster SYNC;
